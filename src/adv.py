@@ -1,4 +1,7 @@
 from room import Room
+from player import Player
+import time
+from os import system, name
 
 # Declare all the rooms
 
@@ -21,6 +24,12 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+#https://www.geeksforgeeks.org/clear-screen-python/
+def clear():
+    if name =='nt':
+        _ = system('cls')
+    else:
+        _ = system('clear')
 
 # Link rooms together
 
@@ -33,12 +42,16 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+room_type = type(room['outside'])
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
 
+player_name = str(input('Hello, what is your name?   '))
+player = Player(player_name, room['outside'])
+clear()
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +62,76 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+playing = True
+print(f'\nWelcome {player.name}\n')
+time.sleep(1)
+clear()
+while playing:   
+    print(player)
+    selection = input('    Please select a direction to move.  ')
+
+    if selection == 'n': 
+        if player.room.n_to != 'The way is blocked.':
+            player.room = player.room.n_to
+            clear()
+            print(f'You move into the {player.room.name}')
+            time.sleep(1)
+        else:
+            clear()
+            print(player.room.n_to)
+            time.sleep(1)
+            clear()
+            print('Try a different direction.')
+            time.sleep(1)
+    elif selection == 'e':
+        if player.room.e_to != 'The way is blocked.':
+            player.room = player.room.e_to
+            clear()
+            print(f'You move into the {player.room.name}')
+            time.sleep(1)
+        else:
+            clear()
+            print(player.room.e_to)
+            time.sleep(1)
+            clear()
+            print('Try a different direction.')
+            time.sleep(1)
+    elif selection == 's':
+        if player.room.s_to != 'The way is blocked.':
+            player.room = player.room.s_to
+            clear()
+            print(f'You move into the {player.room.name}')
+            time.sleep(1)
+        else:
+            clear()
+            print(player.room.s_to)
+            time.sleep(1)
+            clear()
+            print('Try a different direction.')
+            time.sleep(1)
+    elif selection == 'w':
+        if player.room.w_to != 'The way is blocked.':
+            player.room = player.room.w_to
+            clear()
+            print(f'You move into the {player.room.name}')
+            time.sleep(1)
+        else:
+            clear()
+            print(player.room.w_to)
+            time.sleep(1)
+            clear()
+            print('Try a different direction.')
+            time.sleep(1)
+    elif selection == 'q':
+        clear()
+        print(f'\nThanks for playing, {player.name}!\n')
+        playing = False
+    else:
+        clear()
+        print(f'\n {player.name}! You must be confused, try again\n')
+        time.sleep(1)
+    
+    time.sleep(.5)
+    clear()
