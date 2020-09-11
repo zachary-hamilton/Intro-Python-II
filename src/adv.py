@@ -1,6 +1,7 @@
 from room import Room
 from player import Player
 import time
+from item import Item
 from os import system, name
 
 # Declare all the rooms
@@ -42,13 +43,12 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-room_type = type(room['outside'])
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
-
+'''
 player_name = str(input('Hello, what is your name?   '))
 player = Player(player_name, room['outside'])
 clear()
@@ -135,3 +135,11 @@ while playing:
     
     time.sleep(.5)
     clear()
+'''
+potato = Item('potato', 'put it in a stew')
+blanket = Item('blanket', 'warm')
+
+player = Player('Zach', room['outside'])
+#player.add_item(potato)
+#player.add_item(blanket)
+print(player)
