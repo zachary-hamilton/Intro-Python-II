@@ -135,11 +135,107 @@ while playing:
     
     time.sleep(.5)
     clear()
-'''
+
 potato = Item('potato', 'put it in a stew')
 blanket = Item('blanket', 'warm')
 
-player = Player('Zach', room['outside'])
-#player.add_item(potato)
-#player.add_item(blanket)
+
+player.add_item(potato)
+player.add_item(blanket)
 print(player)
+'''
+def new_player():
+    player_name = str(input('Hello, what is your name?   '))
+    player = Player(player_name, room['outside'])
+    clear()
+    return player
+
+def welcome_message():
+    print(f'\nWelcome {player.name}\n')
+    time.sleep(1)
+    clear()
+
+def main_menu():
+    print(f'You are currently in the {player.room.name}')
+    print('-------------')
+    print(f'{player.room.description}')
+    print('-------------')
+    print('You have the following options?')
+    print('    1: Inspect my location')
+    print('    2: Move on')
+    print('    3: View my inventory')
+    print('    4: Quit')
+    choice = input('What would you like to do?    ')
+    return choice
+
+def inspect(player):
+    if len(player.room.inventory) != 0:
+        print(f'You are able to find:')
+        for i, p in enumerate(player.room.inventory):
+            print(f'    {i + 1}: {p.name} - {p.description}')
+        item_to_add = player.room.inventory[int(input('Do you want to add any of these items?    ')) - 1]
+        player.room.remove_item(item_to_add)
+        player.add_item(item_to_add)
+        clear()
+        print(f'You have added the {item_to_add.name}')
+    else:
+        print('There\'s nothing here')
+    return 
+
+def move(player):
+    print('move tbd')
+    return 
+
+def view_inventory(player):
+    if len(player.inventory) != 0:
+        print(f'You are currently holding:')
+        for i, p in enumerate(player.inventory):
+            print(f'    {i + 1}: {p.name} - {p.description}')
+        print('    Press any other key to go back')
+        item_choice = input('Do you want to drop any of these items?    ')
+        if (int(item_choice) - 1) >= 0 and (int(item_choice) - 1) < len(player.inventory):
+            item_to_drop = player.inventory[int(item_choice) - 1]
+            player.remove_item(item_to_drop)
+            player.room.add_item(item_to_drop)
+            clear()
+            print(f'You have dropped the {item_to_drop.name}')
+    else:
+        print('Inventory currently empty')
+    return 
+
+def quit_game():
+    global playing
+    global player
+    print(f'Thanks for playing, {player.name}')
+    playing = False
+    
+
+
+
+
+
+player = new_player()
+playing = True
+welcome_message()
+
+potato = Item('potato', 'put it in a stew')
+blanket = Item('blanket', 'warm')
+
+
+player.add_item(potato)
+player.add_item(blanket)
+
+
+while playing:
+    choice = main_menu()
+    clear()
+    if choice == '1':
+        inspect(player)
+    if choice == '2':
+        move(player)
+    if choice == '3':
+        view_inventory(player)
+    if choice == '4':
+        quit_game()
+    time.sleep(1)
+    clear()
