@@ -20,7 +20,14 @@ class Player:
         ret += '\n-------------'
         ret += f'\n{self.room.description}'
         ret += '\n-------------'
-        ret += f'\nWhere would you like to go next {self.name}?'
+        if len(self.room.inventory) != 0:
+            ret += f'\nYou find the following in the room:'
+            for i, p in enumerate(self.room.inventory):
+                ret += f'\n    {i + 1}: {p.name} - {p.description}'
+        else:
+            ret += '\nYou don\'t see anything of value in the room.'
+        ret += '\n-------------'
+        ret += f'\nActions'
         if self.room.n_to != default:
             ret += f'\n    n: {self.room.n_to.name}'
         if self.room.e_to != default:    
@@ -29,13 +36,8 @@ class Player:
             ret += f'\n    s: {self.room.s_to.name}'
         if self.room.w_to != default:
             ret += f'\n    w: {self.room.w_to.name}'
+        ret += '\n    i: inventory'
         ret += '\n    q: Quit'
         ret += '\n'
-        
-        if len(self.inventory) != 0:
-            ret += f'\n you are currently holding:'
-            for i, p in enumerate(self.inventory):
-                ret += f'\n    {i + 1}: {p.name} - {p.description}'
-        else:
-            ret += 'Inventory currently empty'
+    
         return ret

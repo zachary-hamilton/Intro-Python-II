@@ -6,3 +6,9 @@ class Item:
     def __str__(self):
         ret = f'Item: {self.name} - {self.description}'
         return ret
+
+    def on_take(self):
+        print(f'You have picked up {self.name}')
+
+    def on_drop(self):
+        print(f'You have dropped {self.name}')
